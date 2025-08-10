@@ -40,7 +40,13 @@ mod tests {
     }
     #[test]
     fn test_is_line_invalid(){
-        let test_line: String =String::from("1-3 a: aaaasdfg");
+        let test_line: String =String::from("1-3 a: abacsdfg");
+        let result = is_line_valid(test_line);
+        assert_eq!(result, false)
+    }
+    #[test]
+    fn test_is_line_invalid_no_match(){
+        let test_line: String =String::from("1-3 a: cbdasafg");
         let result = is_line_valid(test_line);
         assert_eq!(result, false)
     }
