@@ -16,16 +16,19 @@ fn is_line_valid(line : String) -> bool {
     println!("{}, {}", rules, content);
     let [range, character]: [&str; 2] = rules.split_whitespace().collect::<Vec<&str>>().try_into().unwrap_or_default();
     let [lower_range_s, upper_range_s]: [&str; 2] = range.split("-").collect::<Vec<&str>>().try_into().unwrap_or_default();
-    let lower_range = lower_range_s.trim().parse::<i32>().unwrap_or(0);
-    let upper_range = upper_range_s.trim().parse::<i32>().unwrap_or(0);
-    let mut count = 0;
-    for c in content.chars() {
-        if c == character.chars().next().unwrap() {
+    let lower_range: usize = lower_range_s.trim().parse::<i32>().unwrap_or(0) as usize;
+    let upper_range: usize = upper_range_s.trim().parse::<i32>().unwrap_or(0) as usize;
+    let mut count = 0; 
+        if content.chars().nth(lower_range).unwrap() == character.chars().next().unwrap() {
             count += 1;
         }
+        if content.chars().nth(upper_range).unwrap() == character.chars().next().unwrap() {
+            count += 1;
+        }
+    if count == 1 {
+        return true
     }
-    let result = (lower_range <= count) && (count <= upper_range);
-    result
+    false
 }
 
 #[cfg(test)]
